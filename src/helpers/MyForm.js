@@ -24,7 +24,6 @@ class MyForm {
       .split("")
       .map(num => parseInt(num)).reduce((sum, current) => sum + current);
     const regEmail = /^[A-Za-z0-9]+[-_\w.]+((@yandex.(ru|kz|ua|by))|(@ya.ru))/;
-    console.log(fio.split(" "))
     if (fio.split(" ").length !== 3){
       errorFields.push("fio");
     }
