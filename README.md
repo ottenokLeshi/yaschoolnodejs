@@ -4,7 +4,15 @@
 ```
 git clone https://github.com/ottenokLeshi/YAnodeJSschool.git
 npm install
-npm start
+
+* Для запуска проекта
+* - npm start
+
+* Для проверки соответствия стандартов кода (ESLint)
+* - npm check
+
+* Для запуска тестов
+* - npm test
 ```
 
 Необходимо реализовать html-страницу с разметкой, логикой поведения и предоставлением глобального js-объекта с методами, описанными в п.1,2,3

@@ -16,15 +16,15 @@ class MyForm {
   validate() {
     const errorFields = [];
     const data = this.getData();
-    const regFio = /\s+/g;
-    const fio = data.fio.replace(regFio, " ");
+    const regFio = /^[a-zA-ZА-Яа-яЁё ]+$/ig;
+    const fio = data.fio.replace(/\s+/g , " ").replace(/^\s*/,"").replace(/\s*$/,"");
     const regPhone = /^(\+7)[\(](\d{3})[\)](\d{3})-(\d{2})-(\d{2})/;
     const phoneSum = data.phone
       .replace(/[-()+]/g, "")
       .split("")
       .map(num => parseInt(num)).reduce((sum, current) => sum + current);
-    const regEmail = /^[A-Za-z0-9]+[-_\w.]+((@yandex.(ru|kz|ua|by))|(@ya.ru))/;
-    if (fio.split(" ").length !== 3){
+    const regEmail = /^[A-Za-z0-9]+[-_\w.]+((@yandex.(ru|kz|ua|by|com)$)|(@ya.ru$))/;
+    if (fio.split(" ").length !== 3 || !regFio.test(fio)){
       errorFields.push("fio");
     }
     if (!regPhone.test(data.phone) || phoneSum > 30) {

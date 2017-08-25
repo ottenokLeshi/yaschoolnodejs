@@ -35,7 +35,7 @@ class Form extends Component {
       <form id="myForm">
         { this.renderForm() }
         <button id="submitButton" type="button" onClick={ () => MyFrom.submit() }>Click me</button>
-			  <div id="resultContainer" className={ this.props.containerValue.className }>
+        <div id="resultContainer" className={ this.props.containerValue.className }>
           { this.props.containerValue.value }
         </div>
       </form>
