@@ -78,7 +78,7 @@ describe("Установка значений и проверка валидац
     describe("Проверка некорректных значений телефона", () => {
       const phoneNotAcceptedArray = ["+7(111)555-50-01", "8(111)000-00-00", "+7(222)444-55-66", "+7(999)999-99-99"];
       const makeTest = phone => {
-        it(`The"${ phone }" is valid`, () => {
+        it(`The"${ phone }" is not valid`, () => {
           MyForm.setData({
             fio: "Иванов Иван Иванович",
             email: "kuligon@ya.ru",
