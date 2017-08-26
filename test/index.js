@@ -5,7 +5,7 @@ import assert from "assert";
 describe("Установка значений и проверка валидации", () => {
   describe("#validate()", () => {
     describe("Проверка корректных значений ФИО", () => {
-      const fioAcceptedArray = ["Иванов Иван Иванович", " Иванов     Иван     Иванович "];
+      const fioAcceptedArray = ["Иванов Иван Иванович", " Иванов     Иван     Иванович ", "George Iscander Zulcarnain"];
       const makeTest = fio => {
         it(`The"${ fio }" is valid`, () => {
           MyForm.setData({
@@ -18,8 +18,9 @@ describe("Установка значений и проверка валидац
       };
       fioAcceptedArray.forEach(fioItem => makeTest(fioItem));
     });
+
     describe("Проверка некорректных значений ФИО", () => {
-      const fioNotAcceptedArray = ["Иван Иванов", "Ivan Ivanov 215", "Иван Иванов Иванович Ивановский"];
+      const fioNotAcceptedArray = ["Иван Иванов", "Ivan Ivanov 215", "Иван Иванов Иванович Ивановский", "123 123 123"];
       const makeTest = fio => {
         it(`The"${ fio }" is not valid`, () => {
           MyForm.setData({
@@ -32,6 +33,7 @@ describe("Установка значений и проверка валидац
       };
       fioNotAcceptedArray.forEach(fioItem => makeTest(fioItem));
     });
+
     describe("Проверка корректных значений почты", () => {
       const emailAcceptedArray = ["ya.ru", "yandex.ru", "yandex.ua", "yandex.by", "yandex.kz", "yandex.com"];
       const makeTest = email => {
@@ -46,6 +48,7 @@ describe("Установка значений и проверка валидац
       };
       emailAcceptedArray.forEach(emailItem => makeTest(emailItem));
     });
+
     describe("Проверка некорректных значений почты", () => {
       const emailNotAcceptedArray = ["ya.kz", "ya.ua", "mail.ru", "yandex.com.ru", "ya.ru.com", ""];
       const makeTest = email => {
@@ -61,6 +64,7 @@ describe("Установка значений и проверка валидац
       };
       emailNotAcceptedArray.forEach(emailItem => makeTest(emailItem));
     });
+
     describe("Проверка корректных значений телефона", () => {
       const phoneAcceptedArray = ["+7(111)222-33-11", "+7(111)555-50-00", "+7(111)000-00-00"];
       const makeTest = phone => {
@@ -75,8 +79,10 @@ describe("Установка значений и проверка валидац
       };
       phoneAcceptedArray.forEach(phoneItem => makeTest(phoneItem));
     });
+
     describe("Проверка некорректных значений телефона", () => {
-      const phoneNotAcceptedArray = ["+7(111)555-50-01", "8(111)000-00-00", "+7(222)444-55-66", "+7(999)999-99-99"];
+      const phoneNotAcceptedArray = ["+7 (111) 000-00-00", "+7(111)555-50-01", "8(111)000-00-00",
+        "+72224445566", "+7(999)999-99-99"];
       const makeTest = phone => {
         it(`The"${ phone }" is not valid`, () => {
           MyForm.setData({

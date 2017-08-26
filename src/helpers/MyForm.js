@@ -17,13 +17,14 @@ class MyForm {
     const errorFields = [];
     const data = this.getData();
     const regFio = /^[a-zA-ZА-Яа-яЁё ]+$/ig;
-    const fio = data.fio.replace(/\s+/g , " ").replace(/^\s*/,"").replace(/\s*$/,"");
     const regPhone = /^(\+7)[\(](\d{3})[\)](\d{3})-(\d{2})-(\d{2})/;
-    const phoneSum = data.phone
-      .replace(/[-()+]/g, "")
+    const regEmail = /^[A-Za-z0-9]+[-_\w.]+((@yandex.(ru|kz|ua|by|com)$)|(@ya.ru$))/;
+    const fio = data.fio.replace(/\s+/g , " ").replace(/^\s*/,"").replace(/\s*$/,"");
+    const phoneSum = _.isEmpty(data.phone) ? "" : data.phone
+      .replace(/[-()+ ]/g, "")
+      .replace(/\s+/g , " ")
       .split("")
       .map(num => parseInt(num)).reduce((sum, current) => sum + current);
-    const regEmail = /^[A-Za-z0-9]+[-_\w.]+((@yandex.(ru|kz|ua|by|com)$)|(@ya.ru$))/;
     if (fio.split(" ").length !== 3 || !regFio.test(fio)){
       errorFields.push("fio");
     }
@@ -68,7 +69,7 @@ class MyForm {
   submit() {
     const validation = this.validate();
     const data = this.getData();
-    const wrappedFetch = () => {
+    const wrappedFetch = ()=> {
       fetchRespond("error")
         .then(data => {
           switch(data.status) {
@@ -80,7 +81,7 @@ class MyForm {
             break;
           case "progress":
             store.dispatch(containerValueChanger("progress", ""));
-            setTimeout(() => wrappedFetch(), data.timeout * 100);
+            setTimeout(() => wrappedFetch(), data.timeout);
             break;
           }
         });
