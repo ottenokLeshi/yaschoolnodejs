@@ -1,5 +1,13 @@
 # YAnodeJSschool
 
+## Стек используемых технологий
+
+- React
+- Redux
+- Webpack
+- Mocha
+- JSDoc
+
 ## Запуск проекта: 
 ```
 git clone https://github.com/ottenokLeshi/YAnodeJSschool.git

@@ -32,13 +32,15 @@ class Form extends Component {
    */
   render() {
     return (
-      <form id="myForm">
-        { this.renderForm() }
-        <button id="submitButton" type="button" onClick={ () => MyFrom.submit() }>Click me</button>
+      <div className="myFormWrapper">
+        <form id="myForm">
+          { this.renderForm() }
+          <button id="submitButton" type="button" onClick={ () => MyFrom.submit() }>Click me</button>
+        </form>
         <div id="resultContainer" className={ this.props.containerValue.className }>
           { this.props.containerValue.value }
         </div>
-      </form>
+      </div>
     );
   }
 }

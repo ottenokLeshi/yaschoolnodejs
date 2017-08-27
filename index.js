@@ -25028,13 +25028,17 @@ class Form extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
    */
   render() {
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-      "form",
-      { id: "myForm" },
-      this.renderForm(),
+      "div",
+      { className: "myFormWrapper" },
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
-        "button",
-        { id: "submitButton", type: "button", onClick: () => __WEBPACK_IMPORTED_MODULE_4__helpers_MyForm__["a" /* default */].submit() },
-        "Click me"
+        "form",
+        { id: "myForm" },
+        this.renderForm(),
+        __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
+          "button",
+          { id: "submitButton", type: "button", onClick: () => __WEBPACK_IMPORTED_MODULE_4__helpers_MyForm__["a" /* default */].submit() },
+          "Click me"
+        )
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         "div",
