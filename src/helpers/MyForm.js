@@ -14,7 +14,7 @@ class MyForm {
    * errorFields {array} - названия полей, не прошедших валидацию
    */
   validate() {
-    const errorFields = [];
+    let errorFields = [];
     const data = this.getData();
     const regFio = /^[a-zA-ZА-Яа-яЁё ]+$/ig;
     const regPhone = /^(\+7)[\(](\d{3})[\)](\d{3})-(\d{2})-(\d{2})/;
@@ -87,12 +87,12 @@ class MyForm {
         });
     };
     const xorArray = _.xor(validation.errorFields, ["fio", "phone", "email"]);
-    xorArray.map(inputName => store.dispatch(inputClassNameChanger(inputName, "")));
+    xorArray.forEach(inputName => store.dispatch(inputClassNameChanger(inputName, "")));
     store.dispatch(containerValueChanger("progress", ""));
     if (validation.isValid) {
       wrappedFetch();
     } else {
-      validation.errorFields.map(inputName => store.dispatch(inputClassNameChanger(inputName, "error")));
+      validation.errorFields.forEach(inputName => store.dispatch(inputClassNameChanger(inputName, "error")));
     }
   }
 }
