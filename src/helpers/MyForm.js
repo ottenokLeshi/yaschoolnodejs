@@ -47,11 +47,11 @@ class MyForm {
    */
   getData() {
     const state = store.getState().inputs;
-    return Object.assign({}, {
+    return {
       "email": state.email.value || "",
       "fio": state.fio.value || "",
       "phone": state.phone.value || ""
-    });
+    };
   }
 
   /**
@@ -73,16 +73,16 @@ class MyForm {
       fetchRespond("error")
         .then(data => {
           switch(data.status) {
-          case "success":
-            store.dispatch(containerValueChanger("success", "Success"));
-            break;
-          case "error":
-            store.dispatch(containerValueChanger("error", data.reason));
-            break;
-          case "progress":
-            store.dispatch(containerValueChanger("progress", ""));
-            setTimeout(() => wrappedFetch(), data.timeout);
-            break;
+            case "success":
+              store.dispatch(containerValueChanger("success", "Success"));
+              break;
+            case "error":
+              store.dispatch(containerValueChanger("error", data.reason));
+              break;
+            case "progress":
+              store.dispatch(containerValueChanger("progress", ""));
+              setTimeout(() => wrappedFetch(), data.timeout);
+              break;
           }
         });
     };

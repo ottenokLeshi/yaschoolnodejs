@@ -11391,11 +11391,11 @@ class MyForm {
    */
   getData() {
     const state = __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].getState().inputs;
-    return Object.assign({}, {
+    return {
       "email": state.email.value || "",
       "fio": state.fio.value || "",
       "phone": state.phone.value || ""
-    });
+    };
   }
 
   /**
@@ -25109,6 +25109,7 @@ const rootReducer = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["b" /* combineRed
       return Object.assign({}, state, {
         [action.name]: Object.assign({}, state[action.name], { className: action.className })
       });
+      break;
   }
 
   return state;

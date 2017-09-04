@@ -18,6 +18,7 @@ export default (state = INITIAL_INPUT_STATE, action) => {
       return Object.assign({}, state, {
         [action.name]: Object.assign({}, state[action.name], {className: action.className})
       });
+      break;
   }
 
   return state;

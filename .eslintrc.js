@@ -17,7 +17,6 @@ module.exports = {
         "react"
     ],
     "rules": {
-        "indent": ["error", "tab"],
         "linebreak-style": ["error", "unix"],
         "quotes": ["error", "double"],
         "semi": ["error", "always"], 
@@ -48,7 +47,7 @@ module.exports = {
         "valid-typeof": 2,
         "wrap-iife": [2, "any"],
 
-        "indent": ["error", 2],
+        "indent": ["error", 2, {"SwitchCase": 1}],
         "global-require": "warn",
         "comma-dangle": ["error", "never"],
 
@@ -72,5 +71,5 @@ module.exports = {
         "import/no-named-as-default": 0,
         "import/no-extraneous-dependencies": [0],
         "import/no-unresolved": [0]
-        }
+    }
 };
