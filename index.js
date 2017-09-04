@@ -11308,8 +11308,8 @@ const inputValuesChanger = values => ({
 
 /**
  * Action, отвечающий за установку имени класса в input-a
- * @param {*} name - название input-a
- * @param {*} className - название класса, который должен быть у input-a
+ * @param {String} name - название input-a
+ * @param {String} className - название класса, который должен быть у input-a
  * 
  * @return {Object}
  */
@@ -11362,7 +11362,7 @@ class MyForm {
    * errorFields {array} - названия полей, не прошедших валидацию
    */
   validate() {
-    const errorFields = [];
+    let errorFields = [];
     const data = this.getData();
     const regFio = /^[a-zA-ZА-Яа-яЁё ]+$/ig;
     const regPhone = /^(\+7)[\(](\d{3})[\)](\d{3})-(\d{2})-(\d{2})/;
@@ -11391,11 +11391,11 @@ class MyForm {
    */
   getData() {
     const state = __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].getState().inputs;
-    return Object.assign({}, {
+    return {
       "email": state.email.value || "",
       "fio": state.fio.value || "",
       "phone": state.phone.value || ""
-    });
+    };
   }
 
   /**
@@ -11430,12 +11430,12 @@ class MyForm {
       });
     };
     const xorArray = __WEBPACK_IMPORTED_MODULE_3_lodash___default.a.xor(validation.errorFields, ["fio", "phone", "email"]);
-    xorArray.map(inputName => __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["c" /* inputClassNameChanger */])(inputName, "")));
+    xorArray.forEach(inputName => __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["c" /* inputClassNameChanger */])(inputName, "")));
     __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["a" /* containerValueChanger */])("progress", ""));
     if (validation.isValid) {
       wrappedFetch();
     } else {
-      validation.errorFields.map(inputName => __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["c" /* inputClassNameChanger */])(inputName, "error")));
+      validation.errorFields.forEach(inputName => __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["c" /* inputClassNameChanger */])(inputName, "error")));
     }
   }
 }
@@ -23807,12 +23807,12 @@ var KNOWN_STATICS = {
   arity: true
 };
 
+var defineProperty = Object.defineProperty;
+var getOwnPropertyNames = Object.getOwnPropertyNames;
 var getOwnPropertySymbols = Object.getOwnPropertySymbols;
-var hasOwnProperty = Object.prototype.hasOwnProperty;
-var propIsEnumerable = Object.prototype.propertyIsEnumerable;
+var getOwnPropertyDescriptor = Object.getOwnPropertyDescriptor;
 var getPrototypeOf = Object.getPrototypeOf;
 var objectPrototype = getPrototypeOf && getPrototypeOf(Object);
-var getOwnPropertyNames = Object.getOwnPropertyNames;
 
 module.exports = function hoistNonReactStatics(targetComponent, sourceComponent, blacklist) {
     if (typeof sourceComponent !== 'string') { // don't hoist over string (html) components
@@ -23833,12 +23833,10 @@ module.exports = function hoistNonReactStatics(targetComponent, sourceComponent,
         for (var i = 0; i < keys.length; ++i) {
             var key = keys[i];
             if (!REACT_STATICS[key] && !KNOWN_STATICS[key] && (!blacklist || !blacklist[key])) {
-                // Only hoist enumerables and non-enumerable functions
-                if(propIsEnumerable.call(sourceComponent, key) || typeof sourceComponent[key] === 'function') {
-                    try { // Avoid failures from read-only properties
-                        targetComponent[key] = sourceComponent[key];
-                    } catch (e) {}
-                }
+                var descriptor = getOwnPropertyDescriptor(sourceComponent, key);
+                try { // Avoid failures from read-only properties
+                    defineProperty(targetComponent, key, descriptor);
+                } catch (e) {}
             }
         }
 
@@ -25111,6 +25109,7 @@ const rootReducer = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["b" /* combineRed
       return Object.assign({}, state, {
         [action.name]: Object.assign({}, state[action.name], { className: action.className })
       });
+      break;
   }
 
   return state;

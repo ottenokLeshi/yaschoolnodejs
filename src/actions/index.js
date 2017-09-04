@@ -24,8 +24,8 @@ export const inputValuesChanger = values => ({
 
 /**
  * Action, отвечающий за установку имени класса в input-a
- * @param {*} name - название input-a
- * @param {*} className - название класса, который должен быть у input-a
+ * @param {String} name - название input-a
+ * @param {String} className - название класса, который должен быть у input-a
  * 
  * @return {Object}
  */

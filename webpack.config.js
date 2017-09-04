@@ -1,4 +1,5 @@
 const path = require("path");
+const createLodashAliases = require("lodash-loader").createLodashAliases;
 
 module.exports = {
   entry: ["./src/index.js"],
@@ -19,12 +20,13 @@ module.exports = {
         exclude: /node_modules/,
         loader: "babel-loader",
         query:
-      {
-        presets: ["react"]
-      }
+        {
+          presets: ["react"]
+        }
       }]
   },
   resolve: {
-    extensions: [".js", ".jsx"]
+    extensions: [".js", ".jsx"],
+    alias: createLodashAliases()
   }
 };
