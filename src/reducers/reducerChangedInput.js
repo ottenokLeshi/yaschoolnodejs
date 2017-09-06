@@ -9,9 +9,9 @@ export default (state = INITIAL_INPUT_STATE, action) => {
       break;
     case "INPUT_VALUES_CHANGER":
       return Object.assign({}, state, {
-        "fio": Object.assign({}, state.fio, {value: action.value.fio}),
-        "phone": Object.assign({}, state.phone, {value: action.value.phone}),
-        "email": Object.assign({}, state.email, {value: action.value.email})
+        "fio": Object.assign({}, state.fio, {value: action.value.fio || state.fio.value}),
+        "phone": Object.assign({}, state.phone, {value: action.value.phone || state.phone.value}),
+        "email": Object.assign({}, state.email, {value: action.value.email || state.email.value})
       });
       break;
     case "INPUT_CLASSNAME_CHANGER":
