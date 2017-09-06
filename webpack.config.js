@@ -4,8 +4,7 @@ const createLodashAliases = require("lodash-loader").createLodashAliases;
 module.exports = {
   entry: ["./src/index.js"],
   output: {
-    filename: "index.js",
-    publicPath: "/dist/"
+    filename: "index.js"
   },
   module: {
     rules: [
