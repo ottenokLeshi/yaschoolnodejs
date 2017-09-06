@@ -4,8 +4,10 @@ export default (state = INITIAL_CONTAINER_STATE, action) => {
   switch(action.type) {
     case "RESULT_CONTAINER_CHANGER":
       return Object.assign({}, state, {
-        className: action.className,
-        value: action.value
+        value: action.value,
+        progress: action.progress,
+        error: action.error,
+        success: action.success
       });
       break;
   }

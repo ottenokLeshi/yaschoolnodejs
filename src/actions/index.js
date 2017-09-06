@@ -25,14 +25,14 @@ export const inputValuesChanger = values => ({
 /**
  * Action, отвечающий за установку имени класса в input-a
  * @param {String} name - название input-a
- * @param {String} className - название класса, который должен быть у input-a
+ * @param {Boolean} isValid - валидность input-a
  * 
  * @return {Object}
  */
-export const inputClassNameChanger = (name, className) => ({
+export const inputClassNameChanger = (name, isValid) => ({
   type: "INPUT_CLASSNAME_CHANGER",
   name: name,
-  className: className
+  isValid: isValid
 });
 
 /**
@@ -44,6 +44,8 @@ export const inputClassNameChanger = (name, className) => ({
  */
 export const containerValueChanger = (className, fieldValue) => ({
   type: "RESULT_CONTAINER_CHANGER",
-  className: className,
-  value: fieldValue
+  value: fieldValue,
+  progress: className.progress || false,
+  error: className.error || false,
+  success: className.success || false
 });
