@@ -70,29 +70,29 @@ class MyForm {
     const validation = this.validate();
     const data = this.getData();
     const wrappedFetch = ()=> {
-      fetchRespond("error")
+      fetchRespond("progress")
         .then(data => {
           switch(data.status) {
             case "success":
-              store.dispatch(containerValueChanger("success", "Success"));
+              store.dispatch(containerValueChanger({ success: true }, "Success"));
               break;
             case "error":
-              store.dispatch(containerValueChanger("error", data.reason));
+              store.dispatch(containerValueChanger({ error: true }, data.reason));
               break;
             case "progress":
-              store.dispatch(containerValueChanger("progress", ""));
+              store.dispatch(containerValueChanger({ progress: true }, ""));
               setTimeout(() => wrappedFetch(), data.timeout);
               break;
           }
         });
     };
     const xorArray = _.xor(validation.errorFields, ["fio", "phone", "email"]);
-    xorArray.forEach(inputName => store.dispatch(inputClassNameChanger(inputName, "")));
-    store.dispatch(containerValueChanger("progress", ""));
+    xorArray.forEach(inputName => store.dispatch(inputClassNameChanger(inputName, true)));
+    store.dispatch(containerValueChanger({ progress: true }, ""));
     if (validation.isValid) {
       wrappedFetch();
     } else {
-      validation.errorFields.forEach(inputName => store.dispatch(inputClassNameChanger(inputName, "error")));
+      validation.errorFields.forEach(inputName => store.dispatch(inputClassNameChanger(inputName, false)));
     }
   }
 }

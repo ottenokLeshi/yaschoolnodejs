@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { inputChanger } from "../actions/index";
+import classNames from "classnames";
 
 /** */
 class Inputs extends Component {
@@ -9,13 +10,12 @@ class Inputs extends Component {
   * @return {JSX}
   */
   render() {
-    console.log(this.props);
     return (
       <div>
         <label htmlFor = "fio">{ "ФИО" }</label>
         <input
           onChange = { event => this.props.onChange(event.target.name, event.target.value) }
-          className = { this.props.inputs.fio.className }
+          className = { classNames({ error: !this.props.inputs.fio.isValid }) }
           value = { this.props.inputs.fio.value }
           type = "text"
           name = "fio"
@@ -24,7 +24,7 @@ class Inputs extends Component {
         <label htmlFor = "email">{ "E-mail" }</label>
         <input
           onChange = { event => this.props.onChange(event.target.name, event.target.value) }
-          className = { this.props.inputs.email.className }
+          className = { classNames({ error: !this.props.inputs.email.isValid }) }
           value = { this.props.inputs.email.value }
           type = "email"
           name = "email"
@@ -33,7 +33,7 @@ class Inputs extends Component {
         <label htmlFor = "phone">{ "Телефон"} </label>
         <input
           onChange = { event => this.props.onChange(event.target.name, event.target.value) }
-          className = { this.props.inputs.phone.className }
+          className = { classNames({ error: !this.props.inputs.phone.isValid }) }
           value = { this.props.inputs.phone.value }
           type = "phone"
           name = "phone"

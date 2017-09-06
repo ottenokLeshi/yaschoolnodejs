@@ -2,15 +2,17 @@
  * Начальное состояние для всех input-ов
  */
 export const INITIAL_INPUT_STATE = {
-  fio: { value:"", label: "ФИО", name: "fio", type: "text", className: "" },
-  email: { value:"", label: "E-mail", name: "email", type: "email", className: "" },
-  phone: { value:"", label: "Телефон", name: "phone", type: "phone", className: "" }
+  fio: { value:"", isValid: true },
+  email: { value:"", isValid: true },
+  phone: { value:"", isValid: true }
 };
 
 /**
  * Начальное состояние для контейнера
  */
 export const INITIAL_CONTAINER_STATE = {
-  className: "",
-  value: ""
+  value: "",
+  progress: false,
+  error: false,
+  success: false
 };

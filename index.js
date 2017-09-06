@@ -11351,28 +11351,28 @@ class MyForm {
     const validation = this.validate();
     const data = this.getData();
     const wrappedFetch = () => {
-      Object(__WEBPACK_IMPORTED_MODULE_2__fetchRespond__["a" /* default */])("error").then(data => {
+      Object(__WEBPACK_IMPORTED_MODULE_2__fetchRespond__["a" /* default */])("progress").then(data => {
         switch (data.status) {
           case "success":
-            __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["a" /* containerValueChanger */])("success", "Success"));
+            __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["a" /* containerValueChanger */])({ success: true }, "Success"));
             break;
           case "error":
-            __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["a" /* containerValueChanger */])("error", data.reason));
+            __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["a" /* containerValueChanger */])({ error: true }, data.reason));
             break;
           case "progress":
-            __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["a" /* containerValueChanger */])("progress", ""));
+            __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["a" /* containerValueChanger */])({ progress: true }, ""));
             setTimeout(() => wrappedFetch(), data.timeout);
             break;
         }
       });
     };
     const xorArray = __WEBPACK_IMPORTED_MODULE_3_lodash___default.a.xor(validation.errorFields, ["fio", "phone", "email"]);
-    xorArray.forEach(inputName => __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["c" /* inputClassNameChanger */])(inputName, "")));
-    __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["a" /* containerValueChanger */])("progress", ""));
+    xorArray.forEach(inputName => __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["c" /* inputClassNameChanger */])(inputName, true)));
+    __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["a" /* containerValueChanger */])({ progress: true }, ""));
     if (validation.isValid) {
       wrappedFetch();
     } else {
-      validation.errorFields.forEach(inputName => __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["c" /* inputClassNameChanger */])(inputName, "error")));
+      validation.errorFields.forEach(inputName => __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["c" /* inputClassNameChanger */])(inputName, false)));
     }
   }
 }
@@ -11400,9 +11400,9 @@ class MyForm {
  * Начальное состояние для всех input-ов
  */
 const INITIAL_INPUT_STATE = {
-  fio: { value: "", label: "ФИО", name: "fio", type: "text", className: "" },
-  email: { value: "", label: "E-mail", name: "email", type: "email", className: "" },
-  phone: { value: "", label: "Телефон", name: "phone", type: "phone", className: "" }
+  fio: { value: "", isValid: true },
+  email: { value: "", isValid: true },
+  phone: { value: "", isValid: true }
 };
 /* harmony export (immutable) */ __webpack_exports__["b"] = INITIAL_INPUT_STATE;
 
@@ -11411,8 +11411,10 @@ const INITIAL_INPUT_STATE = {
  * Начальное состояние для контейнера
  */
 const INITIAL_CONTAINER_STATE = {
-  className: "",
-  value: ""
+  value: "",
+  progress: false,
+  error: false,
+  success: false
 };
 /* harmony export (immutable) */ __webpack_exports__["a"] = INITIAL_CONTAINER_STATE;
 
@@ -11453,14 +11455,14 @@ const inputValuesChanger = values => ({
 /**
  * Action, отвечающий за установку имени класса в input-a
  * @param {String} name - название input-a
- * @param {String} className - название класса, который должен быть у input-a
+ * @param {Boolean} isValid - валидность input-a
  * 
  * @return {Object}
  */
-const inputClassNameChanger = (name, className) => ({
+const inputClassNameChanger = (name, isValid) => ({
   type: "INPUT_CLASSNAME_CHANGER",
   name: name,
-  className: className
+  isValid: isValid
 });
 /* harmony export (immutable) */ __webpack_exports__["c"] = inputClassNameChanger;
 
@@ -11474,8 +11476,10 @@ const inputClassNameChanger = (name, className) => ({
  */
 const containerValueChanger = (className, fieldValue) => ({
   type: "RESULT_CONTAINER_CHANGER",
-  className: className,
-  value: fieldValue
+  value: fieldValue,
+  progress: className.progress || false,
+  error: className.error || false,
+  success: className.success || false
 });
 /* harmony export (immutable) */ __webpack_exports__["a"] = containerValueChanger;
 
@@ -24990,6 +24994,9 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_redux__ = __webpack_require__(52);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__helpers_MyForm__ = __webpack_require__(98);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Inputs__ = __webpack_require__(237);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_classnames__ = __webpack_require__(238);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_classnames__);
+
 
 
 
@@ -25018,7 +25025,13 @@ class Form extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         "div",
-        { id: "resultContainer", className: this.props.containerValue.className },
+        {
+          id: "resultContainer",
+          className: __WEBPACK_IMPORTED_MODULE_5_classnames___default()({
+            success: this.props.containerValue.success,
+            error: this.props.containerValue.error,
+            progress: this.props.containerValue.progress })
+        },
         this.props.containerValue.value
       )
     );
@@ -25078,7 +25091,7 @@ const rootReducer = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["b" /* combineRed
       break;
     case "INPUT_CLASSNAME_CHANGER":
       return Object.assign({}, state, {
-        [action.name]: Object.assign({}, state[action.name], { className: action.className })
+        [action.name]: Object.assign({}, state[action.name], { isValid: action.isValid })
       });
       break;
   }
@@ -25098,8 +25111,10 @@ const rootReducer = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["b" /* combineRed
   switch (action.type) {
     case "RESULT_CONTAINER_CHANGER":
       return Object.assign({}, state, {
-        className: action.className,
-        value: action.value
+        value: action.value,
+        progress: action.progress,
+        error: action.error,
+        success: action.success
       });
       break;
   }
@@ -42220,6 +42235,9 @@ const rootReducer = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["b" /* combineRed
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_redux__ = __webpack_require__(52);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__actions_index__ = __webpack_require__(101);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_classnames__ = __webpack_require__(238);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_classnames__);
+
 
 
 
@@ -42231,7 +42249,6 @@ class Inputs extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
   * @return {JSX}
   */
   render() {
-    console.log(this.props);
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       "div",
       null,
@@ -42242,7 +42259,7 @@ class Inputs extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
         onChange: event => this.props.onChange(event.target.name, event.target.value),
-        className: this.props.inputs.fio.className,
+        className: __WEBPACK_IMPORTED_MODULE_4_classnames___default()({ error: !this.props.inputs.fio.isValid }),
         value: this.props.inputs.fio.value,
         type: "text",
         name: "fio",
@@ -42255,7 +42272,7 @@ class Inputs extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
         onChange: event => this.props.onChange(event.target.name, event.target.value),
-        className: this.props.inputs.email.className,
+        className: __WEBPACK_IMPORTED_MODULE_4_classnames___default()({ error: !this.props.inputs.email.isValid }),
         value: this.props.inputs.email.value,
         type: "email",
         name: "email",
@@ -42269,7 +42286,7 @@ class Inputs extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
         onChange: event => this.props.onChange(event.target.name, event.target.value),
-        className: this.props.inputs.phone.className,
+        className: __WEBPACK_IMPORTED_MODULE_4_classnames___default()({ error: !this.props.inputs.phone.isValid }),
         value: this.props.inputs.phone.value,
         type: "phone",
         name: "phone",
@@ -42293,6 +42310,61 @@ const mapDispatchToProps = dispatch => ({
 });
 
 /* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_2_react_redux__["b" /* connect */])(mapStateToProps, mapDispatchToProps)(Inputs));
+
+/***/ }),
+/* 238 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+  Copyright (c) 2016 Jed Watson.
+  Licensed under the MIT License (MIT), see
+  http://jedwatson.github.io/classnames
+*/
+/* global define */
+
+(function () {
+	'use strict';
+
+	var hasOwn = {}.hasOwnProperty;
+
+	function classNames () {
+		var classes = [];
+
+		for (var i = 0; i < arguments.length; i++) {
+			var arg = arguments[i];
+			if (!arg) continue;
+
+			var argType = typeof arg;
+
+			if (argType === 'string' || argType === 'number') {
+				classes.push(arg);
+			} else if (Array.isArray(arg)) {
+				classes.push(classNames.apply(null, arg));
+			} else if (argType === 'object') {
+				for (var key in arg) {
+					if (hasOwn.call(arg, key) && arg[key]) {
+						classes.push(key);
+					}
+				}
+			}
+		}
+
+		return classes.join(' ');
+	}
+
+	if (typeof module !== 'undefined' && module.exports) {
+		module.exports = classNames;
+	} else if (true) {
+		// register as 'classnames', consistent with npm package name
+		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+			return classNames;
+		}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	} else {
+		window.classNames = classNames;
+	}
+}());
+
 
 /***/ })
 /******/ ]);

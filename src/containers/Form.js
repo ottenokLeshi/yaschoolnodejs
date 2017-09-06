@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import MyFrom  from "../helpers/MyForm";
 import Inputs from "./Inputs";
+import classNames from "classnames";
 
 /** Класс - контейнера формы */
 class Form extends Component {
@@ -17,7 +18,14 @@ class Form extends Component {
           <Inputs { ...this.props}/>
           <button id="submitButton" type="button" onClick={ () => MyFrom.submit() }>Click me</button>
         </form>
-        <div id="resultContainer" className={ this.props.containerValue.className }>
+        <div
+          id="resultContainer"
+          className={ classNames({
+            success: this.props.containerValue.success,
+            error: this.props.containerValue.error,
+            progress: this.props.containerValue.progress })
+          }
+        >
           { this.props.containerValue.value }
         </div>
       </div>
