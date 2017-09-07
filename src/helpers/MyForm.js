@@ -70,7 +70,7 @@ class MyForm {
     const validation = this.validate();
     const data = this.getData();
     const wrappedFetch = ()=> {
-      fetchRespond("progress")
+      fetchRespond("error")
         .then(data => {
           switch(data.status) {
             case "success":
@@ -87,12 +87,17 @@ class MyForm {
         });
     };
     const xorArray = _.xor(validation.errorFields, ["fio", "phone", "email"]);
-    xorArray.forEach(inputName => store.dispatch(inputClassNameChanger(inputName, true)));
-    store.dispatch(containerValueChanger({ progress: true }, ""));
+    xorArray.forEach(inputName => store.dispatch(inputClassNameChanger(
+      inputName,
+      { isValid: true, isInvalid: false }))
+    );
     if (validation.isValid) {
       wrappedFetch();
     } else {
-      validation.errorFields.forEach(inputName => store.dispatch(inputClassNameChanger(inputName, false)));
+      validation.errorFields.forEach(inputName => store.dispatch(inputClassNameChanger(
+        inputName,
+        { isValid: false, isInvalid: true }))
+      );
     }
   }
 }

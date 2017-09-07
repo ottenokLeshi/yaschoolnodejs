@@ -16,7 +16,11 @@ export default (state = INITIAL_INPUT_STATE, action) => {
       break;
     case "INPUT_CLASSNAME_CHANGER":
       return Object.assign({}, state, {
-        [action.name]: Object.assign({}, state[action.name], {isValid: action.isValid})
+        [action.name]: Object.assign(
+          {},
+          state[action.name],
+          { isValid: action.isValid || false, isInvalid: action.isInvalid || false }
+        )
       });
       break;
   }

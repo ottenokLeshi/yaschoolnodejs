@@ -11351,7 +11351,7 @@ class MyForm {
     const validation = this.validate();
     const data = this.getData();
     const wrappedFetch = () => {
-      Object(__WEBPACK_IMPORTED_MODULE_2__fetchRespond__["a" /* default */])("progress").then(data => {
+      Object(__WEBPACK_IMPORTED_MODULE_2__fetchRespond__["a" /* default */])("error").then(data => {
         switch (data.status) {
           case "success":
             __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["a" /* containerValueChanger */])({ success: true }, "Success"));
@@ -11367,12 +11367,11 @@ class MyForm {
       });
     };
     const xorArray = __WEBPACK_IMPORTED_MODULE_3_lodash___default.a.xor(validation.errorFields, ["fio", "phone", "email"]);
-    xorArray.forEach(inputName => __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["c" /* inputClassNameChanger */])(inputName, true)));
-    __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["a" /* containerValueChanger */])({ progress: true }, ""));
+    xorArray.forEach(inputName => __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["c" /* inputClassNameChanger */])(inputName, { isValid: true, isInvalid: false })));
     if (validation.isValid) {
       wrappedFetch();
     } else {
-      validation.errorFields.forEach(inputName => __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["c" /* inputClassNameChanger */])(inputName, false)));
+      validation.errorFields.forEach(inputName => __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["c" /* inputClassNameChanger */])(inputName, { isValid: false, isInvalid: true })));
     }
   }
 }
@@ -11400,9 +11399,9 @@ class MyForm {
  * Начальное состояние для всех input-ов
  */
 const INITIAL_INPUT_STATE = {
-  fio: { value: "", isValid: true },
-  email: { value: "", isValid: true },
-  phone: { value: "", isValid: true }
+  fio: { value: "", isValid: false, isInvalid: false },
+  email: { value: "", isValid: false, isInvalid: false },
+  phone: { value: "", isValid: false, isInvalid: false }
 };
 /* harmony export (immutable) */ __webpack_exports__["b"] = INITIAL_INPUT_STATE;
 
@@ -11425,7 +11424,7 @@ const INITIAL_CONTAINER_STATE = {
 
 "use strict";
 /**
- * Action, отвечающий за изменение одного input-a
+ * Action, вызывающаяся при изменении одного input-a
  * @param {String} name - название input-a
  * @param {String} value -  новое значение
  * 
@@ -11440,7 +11439,7 @@ const inputChanger = (name, value) => ({
 
 
 /**
- * Action, отвечающий за установку значений во все input-ы одновременно
+ * Action, вызывающаяся при установке значений во все input-ы одновременно
  * @param {Object} values - объект со свойствами "fio", "phone", "email" и с соответствующими значениями
  * 
  * @return {Object}
@@ -11453,24 +11452,25 @@ const inputValuesChanger = values => ({
 
 
 /**
- * Action, отвечающий за установку имени класса в input-a
+ * Action, вызывающийся при изменении валидности input-a
  * @param {String} name - название input-a
- * @param {Boolean} isValid - валидность input-a
+ * @param {Object} validationResult - объект характеризующий валидность поля
  * 
  * @return {Object}
  */
-const inputClassNameChanger = (name, isValid) => ({
+const inputClassNameChanger = (name, validationResult) => ({
   type: "INPUT_CLASSNAME_CHANGER",
   name: name,
-  isValid: isValid
+  isValid: validationResult.isValid,
+  isInvalid: validationResult.isInvalid
 });
 /* harmony export (immutable) */ __webpack_exports__["c"] = inputClassNameChanger;
 
 
 /**
- * Action, устанавливающий контейнеру имя класса и значение поля
- * @param {*} className - название класса, который должен быть у контейнета
- * @param {*} fieldValue - значение поля контейнера
+ * Action, вызывающийся при изменении имени и значения поля контейнера
+ * @param {Object} className - название класса, который должен быть у контейнета
+ * @param {String} fieldValue - значение поля контейнера
  * 
  * @return {Object}
  */
@@ -25146,7 +25146,7 @@ const rootReducer = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["b" /* combineRed
       break;
     case "INPUT_CLASSNAME_CHANGER":
       return Object.assign({}, state, {
-        [action.name]: Object.assign({}, state[action.name], { isValid: action.isValid })
+        [action.name]: Object.assign({}, state[action.name], { isValid: action.isValid || false, isInvalid: action.isInvalid || false })
       });
       break;
   }
@@ -42304,6 +42304,7 @@ class Inputs extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
   * @return {JSX}
   */
   render() {
+    const inputs = this.props.inputs;
     return __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
       "div",
       null,
@@ -42314,8 +42315,8 @@ class Inputs extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
         onChange: event => this.props.onChange(event.target.name, event.target.value),
-        className: __WEBPACK_IMPORTED_MODULE_4_classnames___default()({ error: !this.props.inputs.fio.isValid }),
-        value: this.props.inputs.fio.value,
+        className: __WEBPACK_IMPORTED_MODULE_4_classnames___default()({ error: inputs.fio.isInvalid }),
+        value: inputs.fio.value,
         type: "text",
         name: "fio",
         id: "fio"
@@ -42327,8 +42328,8 @@ class Inputs extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
         onChange: event => this.props.onChange(event.target.name, event.target.value),
-        className: __WEBPACK_IMPORTED_MODULE_4_classnames___default()({ error: !this.props.inputs.email.isValid }),
-        value: this.props.inputs.email.value,
+        className: __WEBPACK_IMPORTED_MODULE_4_classnames___default()({ error: inputs.email.isInvalid }),
+        value: inputs.email.value,
         type: "email",
         name: "email",
         id: "email"
@@ -42341,8 +42342,8 @@ class Inputs extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
       ),
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement("input", {
         onChange: event => this.props.onChange(event.target.name, event.target.value),
-        className: __WEBPACK_IMPORTED_MODULE_4_classnames___default()({ error: !this.props.inputs.phone.isValid }),
-        value: this.props.inputs.phone.value,
+        className: __WEBPACK_IMPORTED_MODULE_4_classnames___default()({ error: inputs.phone.isInvalid }),
+        value: inputs.phone.value,
         type: "phone",
         name: "phone",
         id: "phone"
@@ -42353,7 +42354,7 @@ class Inputs extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
 
 Inputs.propTypes = {
   inputs: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.object,
-  onChange: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func
+  onChange: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.func.isRequired
 };
 
 const mapStateToProps = state => ({

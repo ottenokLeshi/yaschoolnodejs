@@ -10,13 +10,14 @@ class Inputs extends Component {
   * @return {JSX}
   */
   render() {
+    const inputs = this.props.inputs;
     return (
       <div>
         <label htmlFor = "fio">{ "ФИО" }</label>
         <input
           onChange = { event => this.props.onChange(event.target.name, event.target.value) }
-          className = { classNames({ error: !this.props.inputs.fio.isValid }) }
-          value = { this.props.inputs.fio.value }
+          className = { classNames({ error: inputs.fio.isInvalid }) }
+          value = { inputs.fio.value }
           type = "text"
           name = "fio"
           id = "fio"
@@ -24,8 +25,8 @@ class Inputs extends Component {
         <label htmlFor = "email">{ "E-mail" }</label>
         <input
           onChange = { event => this.props.onChange(event.target.name, event.target.value) }
-          className = { classNames({ error: !this.props.inputs.email.isValid }) }
-          value = { this.props.inputs.email.value }
+          className = { classNames({ error: inputs.email.isInvalid }) }
+          value = { inputs.email.value }
           type = "email"
           name = "email"
           id = "email"
@@ -33,8 +34,8 @@ class Inputs extends Component {
         <label htmlFor = "phone">{ "Телефон"} </label>
         <input
           onChange = { event => this.props.onChange(event.target.name, event.target.value) }
-          className = { classNames({ error: !this.props.inputs.phone.isValid }) }
-          value = { this.props.inputs.phone.value }
+          className = { classNames({ error: inputs.phone.isInvalid }) }
+          value = { inputs.phone.value }
           type = "phone"
           name = "phone"
           id = "phone"
@@ -47,7 +48,7 @@ class Inputs extends Component {
 
 Inputs.propTypes = {
   inputs: PropTypes.object,
-  onChange: PropTypes.func
+  onChange: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

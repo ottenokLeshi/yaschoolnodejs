@@ -2,9 +2,9 @@
  * Начальное состояние для всех input-ов
  */
 export const INITIAL_INPUT_STATE = {
-  fio: { value:"", isValid: true },
-  email: { value:"", isValid: true },
-  phone: { value:"", isValid: true }
+  fio: { value: "", isValid: false, isInvalid: false },
+  email: { value: "", isValid: false, isInvalid: false },
+  phone: { value: "", isValid: false, isInvalid: false }
 };
 
 /**
