@@ -1,5 +1,5 @@
 /**
- * Action, отвечающий за изменение одного input-a
+ * Action, вызывающаяся при изменении одного input-a
  * @param {String} name - название input-a
  * @param {String} value -  новое значение
  * 
@@ -12,7 +12,7 @@ export const inputChanger = (name, value) => ({
 });
 
 /**
- * Action, отвечающий за установку значений во все input-ы одновременно
+ * Action, вызывающаяся при установке значений во все input-ы одновременно
  * @param {Object} values - объект со свойствами "fio", "phone", "email" и с соответствующими значениями
  * 
  * @return {Object}
@@ -23,22 +23,23 @@ export const inputValuesChanger = values => ({
 });
 
 /**
- * Action, отвечающий за установку имени класса в input-a
+ * Action, вызывающийся при изменении валидности input-a
  * @param {String} name - название input-a
- * @param {Boolean} isValid - валидность input-a
+ * @param {Object} validationResult - объект характеризующий валидность поля
  * 
  * @return {Object}
  */
-export const inputClassNameChanger = (name, isValid) => ({
+export const inputClassNameChanger = (name, validationResult) => ({
   type: "INPUT_CLASSNAME_CHANGER",
   name: name,
-  isValid: isValid
+  isValid: validationResult.isValid,
+  isInvalid: validationResult.isInvalid
 });
 
 /**
- * Action, устанавливающий контейнеру имя класса и значение поля
- * @param {*} className - название класса, который должен быть у контейнета
- * @param {*} fieldValue - значение поля контейнера
+ * Action, вызывающийся при изменении имени и значения поля контейнера
+ * @param {Object} className - название класса, который должен быть у контейнета
+ * @param {String} fieldValue - значение поля контейнера
  * 
  * @return {Object}
  */
