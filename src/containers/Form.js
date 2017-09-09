@@ -16,7 +16,14 @@ class Form extends Component {
       <div className="myFormWrapper">
         <form id="myForm" action="https://raw.githubusercontent.com/ottenokLeshi/yaschoolnodejs/develop/serverResponds/success.json">
           <Inputs { ...this.props }/>
-          <button id="submitButton" type="button" onClick={ () => MyFrom.submit() }>Click me</button>
+          <button
+            id="submitButton"
+            type="button"
+            onClick={ () => MyFrom.submit() }
+            disabled={ this.props.buttonStatus.disabled }
+          >
+          Click me
+          </button>
         </form>
         <div
           id="resultContainer"
@@ -34,11 +41,13 @@ class Form extends Component {
 }
 
 Form.propTypes = {
-  containerValue: PropTypes.object
+  containerValue: PropTypes.object,
+  buttonStatus: PropTypes.object
 };
 
 const mapStateToProps = state => ({
-  containerValue: state.containerValue
+  containerValue: state.containerValue,
+  buttonStatus: state.buttonStatus
 });
 
 export default connect(mapStateToProps)(Form);
