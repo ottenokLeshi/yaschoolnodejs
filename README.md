@@ -6,6 +6,8 @@
 - Redux
 - Webpack
 - Mocha
+- Chai
+- Enzyme
 - JSDoc
 
 ## Запуск проекта: 
