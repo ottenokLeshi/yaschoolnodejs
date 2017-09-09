@@ -50,3 +50,14 @@ export const containerValueChanger = (className, fieldValue) => ({
   error: className.error || false,
   success: className.success || false
 });
+
+/**
+ * Action, вызывающийся при изменении доступности кнопки
+ * @param {Boolean} flag - флаг
+ * 
+ * @return {Object}
+ */
+export const buttonAccessChanger = flag => ({
+  type: "BUTTON_ACCESS_CHANGER",
+  disable: flag
+});

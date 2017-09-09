@@ -9,6 +9,8 @@ import { Provider } from "react-redux";
 import Form from "../src/containers/Form";
 import store from "../src/store/configureStore";
 import MyForm from "../src/helpers/MyForm";
+import { containerValueChanger } from "../src/actions/index";
+
 
 describe("Тестирование компонента <Form />", () => {
   describe("Установка значений и проверка валидации", () => {
@@ -140,6 +142,7 @@ describe("Тестирование компонента <Form />", () => {
 
     describe("Тестирование кнопки отправки формы", () => {
       const button = wrapper.find("#submitButton");
+
       it("На странице задана форма с кнопкой отправки формы", () => {
         expect(button.exists()).to.equal(true);
       });
@@ -157,8 +160,22 @@ describe("Тестирование компонента <Form />", () => {
     });
 
     describe("Тестирование div-контейнера", () => {
+      const container = wrapper.find("#resultContainer");
+      
       it("На странице задан div-контейнер", () => {
         expect(wrapper.find("#resultContainer").exists()).to.equal(true);
+      });
+      
+      it("Верная реакция на успешный статус ответа", () => {
+        store.dispatch(containerValueChanger({ success: true }, "Success"));
+        expect(container.text()).to.equal("Success");
+        expect(container.hasClass("success")).to.equal(true);
+      });
+
+      it("Верная реакция на ошибочный статус ответа", () => {
+        store.dispatch(containerValueChanger({ error: true }, "myError"));
+        expect(container.text()).to.equal("myError");
+        expect(container.hasClass("error")).to.equal(true);
       });
     });
   });

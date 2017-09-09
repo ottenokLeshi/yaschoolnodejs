@@ -1,6 +1,8 @@
 export default () => {
-  const url = document.getElementById("myForm").action;
-  return fetch(url).then(response => response.json());
+  let url = document.getElementById("myForm");
+  /* Заглушка для тестов */
+  if (url == undefined){
+    url = { action: "" };
+  }
+  return fetch(url.action).then(response => response.json());
 };
-
-

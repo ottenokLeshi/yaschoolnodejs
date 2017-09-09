@@ -11280,8 +11280,8 @@ function verifyPlainObject(value, displayName, methodName) {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__store_configureStore__ = __webpack_require__(99);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__actions_index__ = __webpack_require__(101);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__fetchRespond__ = __webpack_require__(236);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lodash__ = __webpack_require__(237);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__fetchRespond__ = __webpack_require__(237);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lodash__ = __webpack_require__(238);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_lodash__);
 
 
@@ -11341,7 +11341,7 @@ class MyForm {
    * @param {object} inputsData - объект с данными формы
    */
   setData(inputsData) {
-    __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["d" /* inputValuesChanger */])(inputsData));
+    __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["e" /* inputValuesChanger */])(inputsData));
   }
 
   /**
@@ -11350,34 +11350,31 @@ class MyForm {
   submit() {
     const validation = this.validate();
     const data = this.getData();
-    const submitButton = document.getElementById("submitButton");
     const wrappedFetch = () => {
-      submitButton.disabled = true;
+      __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["a" /* buttonAccessChanger */])(true));
       Object(__WEBPACK_IMPORTED_MODULE_2__fetchRespond__["a" /* default */])().then(data => {
         switch (data.status) {
           case "success":
-            __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["a" /* containerValueChanger */])({ success: true }, "Success"));
+            __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["b" /* containerValueChanger */])({ success: true }, "Success"));
             break;
           case "error":
-            __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["a" /* containerValueChanger */])({ error: true }, data.reason));
+            __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["b" /* containerValueChanger */])({ error: true }, data.reason));
             break;
           case "progress":
-            __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["a" /* containerValueChanger */])({ progress: true }, ""));
+            __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["b" /* containerValueChanger */])({ progress: true }, ""));
             setTimeout(() => wrappedFetch(), data.timeout);
             break;
         }
-        submitButton.disabled = false;
       }).catch(function (error) {
         console.log("There has been a problem with your fetch operation: " + error.message);
-        submitButton.disabled = false;
       });;
     };
     const xorArray = __WEBPACK_IMPORTED_MODULE_3_lodash___default.a.xor(validation.errorFields, ["fio", "phone", "email"]);
-    xorArray.forEach(inputName => __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["c" /* inputClassNameChanger */])(inputName, { isValid: true, isInvalid: false })));
+    xorArray.forEach(inputName => __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["d" /* inputClassNameChanger */])(inputName, { isValid: true, isInvalid: false })));
     if (validation.isValid) {
       wrappedFetch();
     } else {
-      validation.errorFields.forEach(inputName => __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["c" /* inputClassNameChanger */])(inputName, { isValid: false, isInvalid: true })));
+      validation.errorFields.forEach(inputName => __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["d" /* inputClassNameChanger */])(inputName, { isValid: false, isInvalid: true })));
     }
   }
 }
@@ -11441,7 +11438,7 @@ const inputChanger = (name, value) => ({
   name: name,
   value: value
 });
-/* harmony export (immutable) */ __webpack_exports__["b"] = inputChanger;
+/* harmony export (immutable) */ __webpack_exports__["c"] = inputChanger;
 
 
 /**
@@ -11454,7 +11451,7 @@ const inputValuesChanger = values => ({
   type: "INPUT_VALUES_CHANGER",
   value: values
 });
-/* harmony export (immutable) */ __webpack_exports__["d"] = inputValuesChanger;
+/* harmony export (immutable) */ __webpack_exports__["e"] = inputValuesChanger;
 
 
 /**
@@ -11470,7 +11467,7 @@ const inputClassNameChanger = (name, validationResult) => ({
   isValid: validationResult.isValid,
   isInvalid: validationResult.isInvalid
 });
-/* harmony export (immutable) */ __webpack_exports__["c"] = inputClassNameChanger;
+/* harmony export (immutable) */ __webpack_exports__["d"] = inputClassNameChanger;
 
 
 /**
@@ -11487,7 +11484,20 @@ const containerValueChanger = (className, fieldValue) => ({
   error: className.error || false,
   success: className.success || false
 });
-/* harmony export (immutable) */ __webpack_exports__["a"] = containerValueChanger;
+/* harmony export (immutable) */ __webpack_exports__["b"] = containerValueChanger;
+
+
+/**
+ * Action, вызывающийся при изменении доступности кнопки
+ * @param {Boolean} flag - флаг
+ * 
+ * @return {Object}
+ */
+const buttonAccessChanger = flag => ({
+  type: "BUTTON_ACCESS_CHANGER",
+  disable: flag
+});
+/* harmony export (immutable) */ __webpack_exports__["a"] = buttonAccessChanger;
 
 
 /***/ }),
@@ -25054,7 +25064,7 @@ class App extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_prop_types___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_prop_types__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_react_redux__ = __webpack_require__(52);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__helpers_MyForm__ = __webpack_require__(98);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Inputs__ = __webpack_require__(238);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Inputs__ = __webpack_require__(239);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_classnames__ = __webpack_require__(102);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5_classnames___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5_classnames__);
 
@@ -25080,7 +25090,12 @@ class Form extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Inputs__["a" /* default */], this.props),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           "button",
-          { id: "submitButton", type: "button", onClick: () => __WEBPACK_IMPORTED_MODULE_3__helpers_MyForm__["a" /* default */].submit() },
+          {
+            id: "submitButton",
+            type: "button",
+            onClick: () => __WEBPACK_IMPORTED_MODULE_3__helpers_MyForm__["a" /* default */].submit(),
+            disabled: this.props.buttonStatus.disabled
+          },
           "Click me"
         )
       ),
@@ -25100,11 +25115,13 @@ class Form extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
 }
 
 Form.propTypes = {
-  containerValue: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.object
+  containerValue: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.object,
+  buttonStatus: __WEBPACK_IMPORTED_MODULE_1_prop_types___default.a.object
 };
 
 const mapStateToProps = state => ({
-  containerValue: state.containerValue
+  containerValue: state.containerValue,
+  buttonStatus: state.buttonStatus
 });
 
 /* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_2_react_redux__["b" /* connect */])(mapStateToProps)(Form));
@@ -25117,13 +25134,16 @@ const mapStateToProps = state => ({
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_redux__ = __webpack_require__(54);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__reducerChangedInput__ = __webpack_require__(234);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__reducerRequest__ = __webpack_require__(235);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__reducerButton__ = __webpack_require__(236);
+
 
 
 
 
 const rootReducer = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["b" /* combineReducers */])({
   inputs: __WEBPACK_IMPORTED_MODULE_1__reducerChangedInput__["a" /* default */],
-  containerValue: __WEBPACK_IMPORTED_MODULE_2__reducerRequest__["a" /* default */]
+  containerValue: __WEBPACK_IMPORTED_MODULE_2__reducerRequest__["a" /* default */],
+  buttonStatus: __WEBPACK_IMPORTED_MODULE_3__reducerButton__["a" /* default */]
 });
 
 /* harmony default export */ __webpack_exports__["a"] = (rootReducer);
@@ -25188,13 +25208,30 @@ const rootReducer = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["b" /* combineRed
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony default export */ __webpack_exports__["a"] = ((state = { disabled: false }, action) => {
+  switch (action.type) {
+    case "BUTTON_ACCESS_CHANGER":
+      return Object.assign({}, state, {
+        disabled: action.disable
+      });
+      break;
+  }
+
+  return state;
+});
+
+/***/ }),
+/* 237 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony default export */ __webpack_exports__["a"] = (() => {
   const url = document.getElementById("myForm").action;
   return fetch(url).then(response => response.json());
 });
 
 /***/ }),
-/* 237 */
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -42286,7 +42323,7 @@ const rootReducer = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["b" /* combineRed
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(56), __webpack_require__(93)(module)))
 
 /***/ }),
-/* 238 */
+/* 239 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -42368,7 +42405,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  onChange: (name, value) => dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_index__["b" /* inputChanger */])(name, value))
+  onChange: (name, value) => dispatch(Object(__WEBPACK_IMPORTED_MODULE_3__actions_index__["c" /* inputChanger */])(name, value))
 });
 
 /* harmony default export */ __webpack_exports__["a"] = (Object(__WEBPACK_IMPORTED_MODULE_2_react_redux__["b" /* connect */])(mapStateToProps, mapDispatchToProps)(Inputs));

@@ -10,7 +10,7 @@
 
 ## Запуск проекта: 
 ```
-git clone https://github.com/ottenokLeshi/YAnodeJSschool.git
+git clone https://github.com/ottenokLeshi/yaschoolnodejs.git
 npm install
 
 // Для запуска проекта
