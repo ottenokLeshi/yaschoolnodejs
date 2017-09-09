@@ -70,7 +70,7 @@ class MyForm {
     const validation = this.validate();
     const data = this.getData();
     const wrappedFetch = ()=> {
-      fetchRespond("error")
+      fetchRespond("success")
         .then(data => {
           switch(data.status) {
             case "success":
@@ -84,7 +84,10 @@ class MyForm {
               setTimeout(() => wrappedFetch(), data.timeout);
               break;
           }
-        });
+        })
+        .catch(function(error) {
+          console.log("There has been a problem with your fetch operation: " + error.message);
+        });;
     };
     const xorArray = _.xor(validation.errorFields, ["fio", "phone", "email"]);
     xorArray.forEach(inputName => store.dispatch(inputClassNameChanger(
