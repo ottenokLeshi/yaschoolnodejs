@@ -14,8 +14,8 @@ class Form extends Component {
   render() {
     return (
       <div className="myFormWrapper">
-        <form id="myForm" action="https://raw.githubusercontent.com/ottenokLeshi/yaschoolnodejs/develop/serverResponds/error.json">
-          <Inputs { ...this.props}/>
+        <form id="myForm" action="https://raw.githubusercontent.com/ottenokLeshi/yaschoolnodejs/develop/serverResponds/success.json">
+          <Inputs { ...this.props }/>
           <button id="submitButton" type="button" onClick={ () => MyFrom.submit() }>Click me</button>
         </form>
         <div

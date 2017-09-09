@@ -11350,7 +11350,9 @@ class MyForm {
   submit() {
     const validation = this.validate();
     const data = this.getData();
+    const submitButton = document.getElementById("submitButton");
     const wrappedFetch = () => {
+      submitButton.disabled = true;
       Object(__WEBPACK_IMPORTED_MODULE_2__fetchRespond__["a" /* default */])().then(data => {
         switch (data.status) {
           case "success":
@@ -11364,8 +11366,10 @@ class MyForm {
             setTimeout(() => wrappedFetch(), data.timeout);
             break;
         }
+        submitButton.disabled = false;
       }).catch(function (error) {
         console.log("There has been a problem with your fetch operation: " + error.message);
+        submitButton.disabled = false;
       });;
     };
     const xorArray = __WEBPACK_IMPORTED_MODULE_3_lodash___default.a.xor(validation.errorFields, ["fio", "phone", "email"]);
@@ -25072,7 +25076,7 @@ class Form extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
       { className: "myFormWrapper" },
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         "form",
-        { id: "myForm", action: "https://raw.githubusercontent.com/ottenokLeshi/yaschoolnodejs/develop/serverResponds/error.json" },
+        { id: "myForm", action: "https://raw.githubusercontent.com/ottenokLeshi/yaschoolnodejs/develop/serverResponds/success.json" },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Inputs__["a" /* default */], this.props),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           "button",
@@ -25184,8 +25188,8 @@ const rootReducer = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["b" /* combineRed
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony default export */ __webpack_exports__["a"] = (filename => {
-  var url = document.getElementById("myForm").action;
+/* harmony default export */ __webpack_exports__["a"] = (() => {
+  const url = document.getElementById("myForm").action;
   return fetch(url).then(response => response.json());
 });
 
