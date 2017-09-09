@@ -35,16 +35,19 @@
     "babel-preset-react": "^6.24.1",
     "chai": "^4.1.2",
     "enzyme": "^2.9.1",
+    "es6-promise": "^4.1.1",
     "eslint": "^4.4.1",
     "eslint-config-airbnb": "^15.1.0",
     "eslint-loader": "^1.9.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "^5.1.1",
     "eslint-plugin-react": "^7.1.0",
+    "isomorphic-fetch": "^2.2.1",
     "jsdom": "^11.2.0",
     "lodash-loader": "^1.2.0",
     "mocha": "^3.5.0",
     "react-test-renderer": "^15.6.1",
+    "sinon": "^3.2.1",
     "webpack": "^3.5.5"
   }
 }

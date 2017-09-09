@@ -1,4 +1,6 @@
 const { JSDOM } = require("jsdom");
+require("es6-promise").polyfill();
+require("isomorphic-fetch");
 
 const jsdom = new JSDOM("<!doctype html><html><body></body></html>");
 const { window } = jsdom;

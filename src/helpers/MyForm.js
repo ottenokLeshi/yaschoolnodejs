@@ -69,8 +69,10 @@ class MyForm {
   submit() {
     const validation = this.validate();
     const data = this.getData();
+    const submitButton = document.getElementById("submitButton");
     const wrappedFetch = ()=> {
-      fetchRespond("error")
+      submitButton.disabled = true;
+      fetchRespond()
         .then(data => {
           switch(data.status) {
             case "success":
@@ -84,7 +86,12 @@ class MyForm {
               setTimeout(() => wrappedFetch(), data.timeout);
               break;
           }
-        });
+          submitButton.disabled = false;
+        })
+        .catch(function(error) {
+          console.log("There has been a problem with your fetch operation: " + error.message);
+          submitButton.disabled = false;
+        });;
     };
     const xorArray = _.xor(validation.errorFields, ["fio", "phone", "email"]);
     xorArray.forEach(inputName => store.dispatch(inputClassNameChanger(

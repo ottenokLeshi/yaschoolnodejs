@@ -1,4 +1,5 @@
 const path = require("path");
+const createLodashAliases = require("lodash-loader").createLodashAliases;
 
 module.exports = {
   entry: ["./test/index.js"],
@@ -24,6 +25,7 @@ module.exports = {
     "react-addons-test-utils": true
   },
   resolve: {
-    extensions: [".js", ".jsx"]
+    extensions: [".js", ".jsx"],
+    alias: createLodashAliases()
   }
 };
