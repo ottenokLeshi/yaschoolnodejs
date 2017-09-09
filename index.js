@@ -11351,7 +11351,7 @@ class MyForm {
     const validation = this.validate();
     const data = this.getData();
     const wrappedFetch = () => {
-      Object(__WEBPACK_IMPORTED_MODULE_2__fetchRespond__["a" /* default */])("success").then(data => {
+      Object(__WEBPACK_IMPORTED_MODULE_2__fetchRespond__["a" /* default */])().then(data => {
         switch (data.status) {
           case "success":
             __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["a" /* containerValueChanger */])({ success: true }, "Success"));
@@ -25072,7 +25072,7 @@ class Form extends __WEBPACK_IMPORTED_MODULE_0_react__["Component"] {
       { className: "myFormWrapper" },
       __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
         "form",
-        { id: "myForm" },
+        { id: "myForm", action: "https://raw.githubusercontent.com/ottenokLeshi/yaschoolnodejs/develop/serverResponds/error.json" },
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(__WEBPACK_IMPORTED_MODULE_4__Inputs__["a" /* default */], this.props),
         __WEBPACK_IMPORTED_MODULE_0_react___default.a.createElement(
           "button",
@@ -25185,7 +25185,7 @@ const rootReducer = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["b" /* combineRed
 
 "use strict";
 /* harmony default export */ __webpack_exports__["a"] = (filename => {
-  const url = `https://raw.githubusercontent.com/ottenokLeshi/yaschoolnodejs/develop/serverResponds/${filename}.json`;
+  var url = document.getElementById("myForm").action;
   return fetch(url).then(response => response.json());
 });
 

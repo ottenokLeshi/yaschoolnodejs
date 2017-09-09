@@ -70,7 +70,7 @@ class MyForm {
     const validation = this.validate();
     const data = this.getData();
     const wrappedFetch = ()=> {
-      fetchRespond("success")
+      fetchRespond()
         .then(data => {
           switch(data.status) {
             case "success":

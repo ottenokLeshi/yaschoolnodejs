@@ -1,5 +1,5 @@
 export default filename => {
-  const url = `https://raw.githubusercontent.com/ottenokLeshi/yaschoolnodejs/develop/serverResponds/${filename}.json`;
+  var url = document.getElementById("myForm").action;
   return fetch(url).then(response => response.json());
 };
 
