@@ -11362,7 +11362,7 @@ class MyForm {
             break;
           case "progress":
             __WEBPACK_IMPORTED_MODULE_0__store_configureStore__["a" /* default */].dispatch(Object(__WEBPACK_IMPORTED_MODULE_1__actions_index__["b" /* containerValueChanger */])({ progress: true }, ""));
-            setTimeout(() => wrappedFetch(), data.timeout);
+            setTimeout(wrappedFetch, data.timeout);
             break;
         }
       }).catch(function (error) {
@@ -25225,9 +25225,18 @@ const rootReducer = Object(__WEBPACK_IMPORTED_MODULE_0_redux__["b" /* combineRed
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash__ = __webpack_require__(238);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_lodash___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_lodash__);
+
+
 /* harmony default export */ __webpack_exports__["a"] = (() => {
-  const url = document.getElementById("myForm").action;
-  return fetch(url).then(response => response.json());
+  let url = document.querySelector("#submitButton");
+  /* Заглушка для тестов */
+  if (__WEBPACK_IMPORTED_MODULE_0_lodash___default.a.isNull(url)) {
+    url = { action: "" };
+  }
+
+  return fetch(url.action).then(response => response.json());
 });
 
 /***/ }),

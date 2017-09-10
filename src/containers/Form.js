@@ -22,7 +22,7 @@ class Form extends Component {
             onClick={ () => MyFrom.submit() }
             disabled={ this.props.buttonStatus.disabled }
           >
-          Click me
+            Click me
           </button>
         </form>
         <div

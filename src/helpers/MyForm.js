@@ -1,5 +1,10 @@
 import store from "../store/configureStore";
-import { inputValuesChanger, containerValueChanger, inputClassNameChanger, buttonAccessChanger } from "../actions/index";
+import {
+  inputValuesChanger,
+  containerValueChanger,
+  inputClassNameChanger,
+  buttonAccessChanger
+} from "../actions/index";
 import fetchRespond from "./fetchRespond";
 import _ from "lodash";
 
@@ -82,7 +87,7 @@ class MyForm {
               break;
             case "progress":
               store.dispatch(containerValueChanger({ progress: true }, ""));
-              setTimeout(() => wrappedFetch(), data.timeout);
+              setTimeout(wrappedFetch, data.timeout);
               break;
           }
         })
