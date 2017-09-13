@@ -1,13 +1,12 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import MyFrom  from "../helpers/MyForm";
-import Inputs from "./Inputs";
-import classNames from "classnames";
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import classNames from 'classnames';
+import { connect } from 'react-redux';
+import MyFrom from '../helpers/MyForm';
+import Inputs from './Inputs';
 
 /** Класс - контейнера формы */
 class Form extends Component {
-
   /**
    * @return {JSX}
    */
@@ -15,19 +14,19 @@ class Form extends Component {
     return (
       <div className="myFormWrapper">
         <form id="myForm" action="https://raw.githubusercontent.com/ottenokLeshi/yaschoolnodejs/develop/serverResponds/success.json">
-          <Inputs { ...this.props }/>
+          <Inputs {...this.props} />
           <button
             id="submitButton"
             type="button"
-            onClick={ () => MyFrom.submit() }
-            disabled={ this.props.buttonStatus.disabled }
+            onClick={() => MyFrom.submit()}
+            disabled={this.props.buttonStatus.disabled}
           >
             Click me
           </button>
         </form>
         <div
           id="resultContainer"
-          className={ classNames({
+          className={classNames({
             success: this.props.containerValue.success,
             error: this.props.containerValue.error,
             progress: this.props.containerValue.progress })
@@ -41,8 +40,8 @@ class Form extends Component {
 }
 
 Form.propTypes = {
-  containerValue: PropTypes.object,
-  buttonStatus: PropTypes.object
+  containerValue: PropTypes.object.isRequired,
+  buttonStatus: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({

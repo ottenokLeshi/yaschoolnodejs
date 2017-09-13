@@ -6,19 +6,20 @@
  * @return {Object}
  */
 export const inputChanger = (name, value) => ({
-  type: "INPUT_CHANGED_VALUE",
-  name: name,
-  value: value
+  type: 'INPUT_CHANGED_VALUE',
+  name,
+  value
 });
 
 /**
  * Action, вызывающаяся при установке значений во все input-ы одновременно
- * @param {Object} values - объект со свойствами "fio", "phone", "email" и с соответствующими значениями
+ * @param {Object} values - объект со свойствами "fio", "phone", "email" и 
+ * с соответствующими значениями
  * 
  * @return {Object}
  */
 export const inputValuesChanger = values => ({
-  type: "INPUT_VALUES_CHANGER",
+  type: 'INPUT_VALUES_CHANGER',
   value: values
 });
 
@@ -30,8 +31,8 @@ export const inputValuesChanger = values => ({
  * @return {Object}
  */
 export const inputClassNameChanger = (name, validationResult) => ({
-  type: "INPUT_CLASSNAME_CHANGER",
-  name: name,
+  type: 'INPUT_CLASSNAME_CHANGER',
+  name,
   isValid: validationResult.isValid,
   isInvalid: validationResult.isInvalid
 });
@@ -44,7 +45,7 @@ export const inputClassNameChanger = (name, validationResult) => ({
  * @return {Object}
  */
 export const containerValueChanger = (className, fieldValue) => ({
-  type: "RESULT_CONTAINER_CHANGER",
+  type: 'RESULT_CONTAINER_CHANGER',
   value: fieldValue,
   progress: className.progress || false,
   error: className.error || false,
@@ -58,6 +59,6 @@ export const containerValueChanger = (className, fieldValue) => ({
  * @return {Object}
  */
 export const buttonAccessChanger = flag => ({
-  type: "BUTTON_ACCESS_CHANGER",
+  type: 'BUTTON_ACCESS_CHANGER',
   disable: flag
 });
