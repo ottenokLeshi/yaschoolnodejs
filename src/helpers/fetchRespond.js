@@ -1,8 +1,13 @@
+import _ from 'lodash';
+
 export default () => {
-  let url = document.getElementById("myForm");
+  /* global document:true */
+  let url = document.querySelector('#myForm');
   /* Заглушка для тестов */
-  if (url == undefined){
-    url = { action: "" };
+  if (_.isNull(url)) {
+    url = { action: '' };
   }
+
+  /* global fetch:true */
   return fetch(url.action).then(response => response.json());
 };

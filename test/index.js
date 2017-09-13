@@ -161,9 +161,9 @@ describe("Тестирование компонента <Form />", () => {
 
     describe("Тестирование div-контейнера", () => {
       const container = wrapper.find("#resultContainer");
-      
+
       it("На странице задан div-контейнер", () => {
-        expect(wrapper.find("#resultContainer").exists()).to.equal(true);
+        expect(container.exists()).to.equal(true);
       });
       
       it("Верная реакция на успешный статус ответа", () => {

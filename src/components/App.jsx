@@ -1,5 +1,5 @@
-import React, { Component } from "react";
-import Form from "../containers/Form";
+import React, { Component } from 'react';
+import Form from '../containers/Form';
 
 /** Основной класс приложения */
 export default class App extends Component {
@@ -8,7 +8,7 @@ export default class App extends Component {
    */
   render() {
     return (
-      <div className = "App">
+      <div className="App">
         <Form />
       </div>
     );

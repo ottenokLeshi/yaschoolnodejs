@@ -1,31 +1,30 @@
-const path = require("path");
-const createLodashAliases = require("lodash-loader").createLodashAliases;
+const createLodashAliases = require('lodash-loader').createLodashAliases;
 
 module.exports = {
-  entry: ["./src/index.js"],
+  entry: ['./src/index.jsx'],
   output: {
-    filename: "index.js"
+    filename: 'index.js'
   },
   module: {
     rules: [
       {
-        enforce: "pre",
-        test: /\.js$/,
-        loader: "eslint-loader",
+        enforce: 'pre',
+        test: /\.jsx?$/,
+        loader: 'eslint-loader',
         exclude: /node_modules/
       },
       {
-        test: /\.js$/,
+        test: /\.jsx?$/,
         exclude: /node_modules/,
-        loader: "babel-loader",
+        loader: 'babel-loader',
         query:
         {
-          presets: ["react"]
+          presets: ['react']
         }
       }]
   },
   resolve: {
-    extensions: [".js", ".jsx"],
+    extensions: ['.js', '.jsx'],
     alias: createLodashAliases()
   }
 };

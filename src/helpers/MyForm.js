@@ -1,11 +1,15 @@
-import store from "../store/configureStore";
-import { inputValuesChanger, containerValueChanger, inputClassNameChanger, buttonAccessChanger } from "../actions/index";
-import fetchRespond from "./fetchRespond";
-import _ from "lodash";
+import _ from 'lodash';
+import store from '../store/configureStore';
+import {
+  inputValuesChanger,
+  containerValueChanger,
+  inputClassNameChanger,
+  buttonAccessChanger
+} from '../actions/index';
+import fetchRespond from './fetchRespond';
 
 /** Класс MyForm с методами для работы с формой */
-class MyForm {
-
+export default class MyForm {
   /**
    * Метод, определяющий валидность значений в форме
    * 
@@ -13,28 +17,29 @@ class MyForm {
    * isValid {boolean} - результат валидации 
    * errorFields {array} - названия полей, не прошедших валидацию
    */
-  validate() {
-    let errorFields = [];
+  static validate() {
+    const errorFields = [];
     const data = this.getData();
     const regFio = /^[a-zA-ZА-Яа-яЁё ]+$/ig;
-    const regPhone = /^(\+7)[\(](\d{3})[\)](\d{3})-(\d{2})-(\d{2})/;
+    const regPhone = /^(\+7)[(](\d{3})[)](\d{3})-(\d{2})-(\d{2})/;
     const regEmail = /^[A-Za-z0-9]+[-_\w.]+((@yandex.(ru|kz|ua|by|com)$)|(@ya.ru$))/;
-    const fio = data.fio.replace(/\s+/g , " ").replace(/^\s*/,"").replace(/\s*$/,"");
-    const phoneSum = _.isEmpty(data.phone) ? "" : data.phone
-      .replace(/[-()+ ]/g, "")
-      .replace(/\s+/g , " ")
-      .split("")
-      .map(num => parseInt(num)).reduce((sum, current) => sum + current);
-    if (fio.split(" ").length !== 3 || !regFio.test(fio)){
-      errorFields.push("fio");
+    const fio = data.fio.replace(/\s+/g, ' ').replace(/^\s*/, '').replace(/\s*$/, '');
+    const phoneSum = _.isEmpty(data.phone) ? '' : data.phone
+      .replace(/[-()+ ]/g, '')
+      .replace(/\s+/g, ' ')
+      .split('')
+      .map(num => parseInt(num, 10))
+      .reduce((sum, current) => sum + current);
+    if (fio.split(' ').length !== 3 || !regFio.test(fio)) {
+      errorFields.push('fio');
     }
     if (!regPhone.test(data.phone) || phoneSum > 30) {
-      errorFields.push("phone");
+      errorFields.push('phone');
     }
     if (!regEmail.test(data.email)) {
-      errorFields.push("email");
+      errorFields.push('email');
     }
-    return { isValid: errorFields.length === 0, errorFields: errorFields } ;
+    return { isValid: errorFields.length === 0, errorFields };
   }
 
   /**
@@ -45,12 +50,12 @@ class MyForm {
    * fio {string} - значение в поле 
    * phone {string} - значение в поле 
    */
-  getData() {
+  static getData() {
     const state = store.getState().inputs;
     return {
-      "email": state.email.value || "",
-      "fio": state.fio.value || "",
-      "phone": state.phone.value || ""
+      email: state.email.value || '',
+      fio: state.fio.value || '',
+      phone: state.phone.value || ''
     };
   }
 
@@ -59,38 +64,40 @@ class MyForm {
    * 
    * @param {object} inputsData - объект с данными формы
    */
-  setData(inputsData) {
+  static setData(inputsData) {
     store.dispatch(inputValuesChanger(inputsData));
   }
 
   /**
    * Метод, выполняющий валидацию и отправку запроса
    */
-  submit() {
+  static submit() {
     const validation = this.validate();
-    const data = this.getData();
-    const wrappedFetch = ()=> {
+    const wrappedFetch = () => {
       store.dispatch(buttonAccessChanger(true));
       fetchRespond()
-        .then(data => {
-          switch(data.status) {
-            case "success":
-              store.dispatch(containerValueChanger({ success: true }, "Success"));
+        .then((data) => {
+          switch (data.status) {
+            case 'success':
+              store.dispatch(containerValueChanger({ success: true }, 'Success'));
               break;
-            case "error":
+            case 'error':
               store.dispatch(containerValueChanger({ error: true }, data.reason));
               break;
-            case "progress":
-              store.dispatch(containerValueChanger({ progress: true }, ""));
-              setTimeout(() => wrappedFetch(), data.timeout);
+            case 'progress':
+              store.dispatch(containerValueChanger({ progress: true }, ''));
+              setTimeout(wrappedFetch, data.timeout);
+              break;
+            default:
               break;
           }
         })
-        .catch(function(error) {
-          console.log("There has been a problem with your fetch operation: " + error.message);
-        });;
+        .catch((error) => {
+          /* eslint no-console: 0 */
+          console.log(`There has been a problem with your fetch operation: ${error.message}`);
+        });
     };
-    const xorArray = _.xor(validation.errorFields, ["fio", "phone", "email"]);
+    const xorArray = _.xor(validation.errorFields, ['fio', 'phone', 'email']);
     xorArray.forEach(inputName => store.dispatch(inputClassNameChanger(
       inputName,
       { isValid: true, isInvalid: false }))
@@ -105,5 +112,3 @@ class MyForm {
     }
   }
 }
-
-export default new MyForm();
